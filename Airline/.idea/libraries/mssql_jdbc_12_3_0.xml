@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mssql-jdbc-12.3.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../Airline system/mssql-jdbc-12.3.0.jre8-preview" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
