@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Flight {
-    private static final String DB_URL = "jdbc:mysql://localhost/airline?";
+    private static final String URL = "jdbc:mysql://localhost/airline?";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "FarahHazem123@";
+
 
     private int flightId;
     private int airlineId;
@@ -112,7 +113,7 @@ public class Flight {
     }
 
     public  void getFlights () {
-        try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM flight WHERE availability = true")) {
 
@@ -142,7 +143,7 @@ public class Flight {
 
     public void displayIDs(){
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT FID FROM flight")) {
 
@@ -170,7 +171,7 @@ public class Flight {
         }
     }
     public  void addFlight() {
-        try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement("UPDATE flight SET F_source = ?, destination = ?, " +
                      "departure__date = ?, departure_time = ?, arrival__date = ?, arrival_time = ?, availability = ? " +
                      "WHERE FID = ?")) {
@@ -229,7 +230,7 @@ public class Flight {
 
 
 public void updateFlightInfo() {
-    try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+    try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
          PreparedStatement stmt = conn.prepareStatement("UPDATE flight SET " +
                  "F_source = COALESCE(?, F_source), " +
                  "destination = COALESCE(?, destination), " +
@@ -289,7 +290,7 @@ public void updateFlightInfo() {
 
 
     private static boolean checkFlightExists(int flightId) throws SQLException {
-        try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM flight WHERE FID = ?")) {
             stmt.setInt(1, flightId);
             try (ResultSet rs = stmt.executeQuery()) {

@@ -21,9 +21,9 @@ public class ticket {
     private int flightID;
 
 
-    private static final String URL = "jdbc:sqlserver://192.168.1.2:1433;database=crebas;encrypt=true;trustservercertificate=true";
-    private static final String username = "iadmins";
-    private static final String password = "1234567";
+    private static final String URL = "jdbc:mysql://localhost/airline?";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "FarahHazem123@";
     private static Connection connection = null;
 
     public ticket(){}
@@ -39,7 +39,7 @@ public class ticket {
         String driver ="com.microsoft.sqlserver.jdbc.SQLServerDriver";
         try {
             Class.forName(driver);
-            connection = DriverManager.getConnection(URL, username, password);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Connected to the database successfully!");
         } catch (ClassNotFoundException e) {
             System.out.println("Driver class not found: " + e.getMessage());
@@ -65,7 +65,7 @@ public class ticket {
             //  (tid,seatnum,nid,classnum,fid);
 
             ticket tic = new ticket(t.ticketID,t.seatNumber,t.nationalId,t.Classnumber,t.flightID);
-            Connection con = DriverManager.getConnection(URL,username, password);
+            Connection con = DriverManager.getConnection(URL,USERNAME, PASSWORD);
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO TICKET (TICKETID, FLIGHT_ID, SEATNUMBER,PASSWNGER_NATIONAL_ID,CLASS) VALUES (?, ?, ?,?,?)");
             ps.setInt(1,t.ticketID );
@@ -117,7 +117,7 @@ public class ticket {
     public int generateTicketId() {
         int tid = 0;
         try {
-            Connection con = DriverManager.getConnection(URL,username, password);
+            Connection con = DriverManager.getConnection(URL,USERNAME, PASSWORD);
 
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT MAX(TICKETID) FROM TICKET");
@@ -144,7 +144,7 @@ public class ticket {
     public boolean checkTicketFlightMatch(int ticketId) {
         boolean matchFound = false;
         try {
-            Connection con = DriverManager.getConnection(URL,username, password);
+            Connection con = DriverManager.getConnection(URL,USERNAME, PASSWORD);
             PreparedStatement ps = con.prepareStatement("SELECT t.TICKETID FROM TICKET t JOIN FLIGHT f ON t.FlIGHT_ID = f.FID WHERE t.TICKETID = ?");
             ps.setInt(1, ticketId);
 

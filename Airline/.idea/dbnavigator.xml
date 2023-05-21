@@ -13,7 +13,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3816f1a8-d94c-4f04-af36-b89d63f07386">
-      <console name="airline connection " type="STANDARD" schema="mysql" session="Main" />
+      <console name="airline connection " type="STANDARD" schema="airline" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -24,6 +24,7 @@
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="3816f1a8-d94c-4f04-af36-b89d63f07386" dataset="airline_system.flight" active-filter-id="" />
+    <filter-actions connection-id="3816f1a8-d94c-4f04-af36-b89d63f07386" dataset="airline.costumer" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
