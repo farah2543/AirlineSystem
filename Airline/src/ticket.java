@@ -17,8 +17,10 @@ public class ticket {
     private int ticketID;
     private short seatNumber;
     private long nationalId;
-    private  String  Classnumber ;
+    private String Classnumber;
     private int flightID;
+
+    private int bookingID;
 
 
     private static final String URL = "jdbc:mysql://localhost/airline?";
@@ -26,8 +28,10 @@ public class ticket {
     private static final String PASSWORD = "FarahHazem123@";
     private static Connection connection = null;
 
-    public ticket(){}
-    public ticket(int ticketID, short seatNumber, long nationalId, String Classnumber,int flightID ) {
+    public ticket () {
+    }
+
+    public ticket ( int ticketID , short seatNumber , long nationalId , String Classnumber , int flightID ) {
         this.ticketID = ticketID;
         this.seatNumber = seatNumber;
         this.nationalId = nationalId;
@@ -35,28 +39,58 @@ public class ticket {
         this.flightID = flightID;
     }
 
-    public static Connection getconnection(){
-        String driver ="com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    public static Connection getconnection () {
+        String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Connected to the database successfully!");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Driver class not found: " + e.getMessage());
-        } catch (SQLException e) {
-            System.out.println("Database connection error: " + e.getMessage());
+            Class.forName( driver );
+            connection = DriverManager.getConnection( URL , USERNAME , PASSWORD );
+            System.out.println( "Connected to the database successfully!" );
+        } catch ( ClassNotFoundException e ) {
+            System.out.println( "Driver class not found: " + e.getMessage() );
+        } catch ( SQLException e ) {
+            System.out.println( "Database connection error: " + e.getMessage() );
         } finally {
             // Close the connection in the finally block to ensure it gets closed regardless of any exceptions
-            if (connection != null) {
+            if ( connection != null ) {
                 try {
                     connection.close();
-                } catch (SQLException e) {
-                    System.out.println("Failed to close the database connection: " + e.getMessage());
+                } catch ( SQLException e ) {
+                    System.out.println( "Failed to close the database connection: " + e.getMessage() );
                 }
             }
         }
         return connection;
     }
+
+    public int generateBookingId () {
+        int bid = 0;
+        try {
+            Connection con = DriverManager.getConnection( URL , USERNAME , PASSWORD );
+
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery( "SELECT MAX(BID) FROM BOOKING" );
+            rs.next();
+            String maxTicketId = rs.getString( 1 ); // Get the value of the first column in the result set
+
+            if ( maxTicketId == null ) {
+                bid = 1114;
+            }
+            else {
+                long id = Long.parseLong( maxTicketId.substring( 2 ) ); // Remove the "MAX" prefix
+                id++;
+                bid = (int) id;
+            }
+
+            rs.close();
+            s.close();
+        } catch ( SQLException e ) {
+            System.out.println(e);
+
+        }
+
+        return bid;
+    }
+
 
 
 
@@ -64,29 +98,60 @@ public class ticket {
         try {
             //  (tid,seatnum,nid,classnum,fid);
 
-            ticket tic = new ticket(t.ticketID,t.seatNumber,t.nationalId,t.Classnumber,t.flightID);
-            Connection con = DriverManager.getConnection(URL,USERNAME, PASSWORD);
+            ticket tic = new ticket( t.ticketID , t.seatNumber , t.nationalId , t.Classnumber , t.flightID );
+            Connection con = DriverManager.getConnection( URL , USERNAME , PASSWORD );
 
-            PreparedStatement ps = con.prepareStatement("INSERT INTO TICKET (TICKETID, FLIGHT_ID, SEATNUMBER,PASSWNGER_NATIONAL_ID,CLASS) VALUES (?, ?, ?,?,?)");
-            ps.setInt(1,t.ticketID );
-            ps.setInt(2, tic.flightID);
-            ps.setShort(3, tic.seatNumber);
-            ps.setLong(4, tic.nationalId);
-            ps.setString(5, tic.Classnumber);
+            PreparedStatement ps = con.prepareStatement( "INSERT INTO TICKET (TICKETID, FLIGHT_ID, SEATNUMBER,PASSENGER_NATONAL_ID,CLASS) VALUES (?, ?, ?,?,?)" );
+            ps.setInt( 1 , t.ticketID );
+            ps.setInt( 2 , tic.flightID );
+            ps.setShort( 3 , tic.seatNumber );
+            ps.setLong( 4 , tic.nationalId );
+            ps.setString( 5 , tic.Classnumber );
 
             int rowsAffected = ps.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Ticket information saved successfully.");
-            } else {
-                System.out.println("Failed to save ticket information.");
+            if ( rowsAffected > 0 ) {
+                System.out.println( "Ticket information saved successfully." );
+            }
+            else {
+                System.out.println( "Failed to save ticket information." );
             }
 
             ps.close();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch ( SQLException e ) {
+            System.out.println( e );
 
         }
+        saveBooking(t);
+
+    }
+
+    public void saveBooking(ticket t){
+        try {
+            Connection con = DriverManager.getConnection( URL , USERNAME , PASSWORD );
+
+            PreparedStatement ps = con.prepareStatement( "INSERT INTO booking (NATIONALID2, FID, TICKETID,BID) VALUES (?, ?, ?,?)" );
+            ps.setLong( 1 , t.nationalId );
+            ps.setInt( 2 , t.flightID );
+            int bid = t.generateBookingId();
+            ps.setInt( 3 , t.bookingID );
+            // Set other parameters if needed
+            ps.setInt( 4,bid );
+            int rowsAffected = ps.executeUpdate();
+
+            if ( rowsAffected > 0 ) {
+                System.out.println( "Book data saved successfully." );
+            }
+            else {
+                System.out.println( "Failed to save book data." );
+            }
+
+
+            ps.close();
+        } catch ( SQLException e ) {
+            System.out.println( e );
+        }
+    }
 
 
 
@@ -113,40 +178,32 @@ public class ticket {
 //            System.out.println("no SQL connection ");
 //        }
 
-    }
+
     public int generateTicketId() {
-        int tid = 0;
-        try {
-            Connection con = DriverManager.getConnection(URL,USERNAME, PASSWORD);
+        int ticketId = 0;
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             Statement s = con.createStatement();
+             ResultSet rs = s.executeQuery("SELECT MAX(TICKETID) FROM ticket")) {
 
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT MAX(TICKETID) FROM TICKET");
             rs.next();
-            String maxTicketId = rs.getString(1); // Get the value of the first column in the result set
+            int maxTicketId = rs.getInt(1); // Get the value of the first column in the result set
 
-            if (maxTicketId == null) {
-                tid = 2021;
-            } else {
-                long id = Long.parseLong(maxTicketId.substring(2)); // Remove the "MAX" prefix
-                id++;
-                tid = (int) id;
-            }
+            ticketId = maxTicketId + 1;
 
-            rs.close();
-            s.close();
         } catch (SQLException e) {
-            // Handle any exceptions here
+            System.out.println(e);
         }
 
-        return tid;
-
+        return ticketId;
     }
-    public boolean checkTicketFlightMatch(int ticketId) {
+
+
+    public boolean checkTicketFlightMatch(int flightID) {
         boolean matchFound = false;
         try {
             Connection con = DriverManager.getConnection(URL,USERNAME, PASSWORD);
-            PreparedStatement ps = con.prepareStatement("SELECT t.TICKETID FROM TICKET t JOIN FLIGHT f ON t.FlIGHT_ID = f.FID WHERE t.TICKETID = ?");
-            ps.setInt(1, ticketId);
+            PreparedStatement ps = con.prepareStatement("SELECT FID FROM flight WHERE availability = true AND FID = ?");
+            ps.setInt(1, flightID);
 
             ResultSet rs = ps.executeQuery();
             matchFound = rs.next();
@@ -154,6 +211,7 @@ public class ticket {
             rs.close();
             ps.close();
         } catch (SQLException e) {
+            System.out.println(e);
         }
 
         return matchFound;
@@ -229,6 +287,7 @@ public class ticket {
     }
 
 
-
-
+    public void setBookingID ( int bookingID ) {
+        this.bookingID = bookingID;
+    }
 }
