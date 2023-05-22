@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class Flight {
 
-    final String DB_URL = "jdbc:mysql://localhost/airline?";
-    final String USERNAME = "root";
-    final String PASSWORD = "FarahHazem123@";
+    final String DB_URL = "jdbc:mysql://localhost/version2?";
+    final String USERNAME = "salma";
+    final String PASSWORD = "Salma.123456";
     private int flightId;
 
     private int airlineId;

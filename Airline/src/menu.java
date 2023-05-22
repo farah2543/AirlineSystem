@@ -13,9 +13,9 @@ public class menu {
         return choice;
     }
     public void User_menu(CustomerAuthentication cust){
-        final String URL = "jdbc:mysql://localhost/airline?";
-        final String USERNAME = "root";
-        final String PASSWORD = "FarahHazem123@";
+        final String URL = "jdbc:mysql://localhost/version2?";
+        final String USERNAME = "salma";
+        final String PASSWORD = "Salma.123456";
 
 
         Scanner Scan=new Scanner(System.in);

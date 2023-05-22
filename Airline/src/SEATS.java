@@ -14,8 +14,8 @@ public class SEATS {
 
     private final String DB_Url = "jdbc:mysql://localhost/first?serverTimezone=UTC";
     //String url = "jdbc:sqlserver://localhost;encrypt=true;integratedSecurity=true;";
-    private final String Username = "root";
-    private final String Pass ="Boody_500";
+    private final String Username = "salma";
+    private final String Pass ="Salma.123456";
 
     Scanner input = new Scanner (System.in);
 

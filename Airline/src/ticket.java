@@ -23,9 +23,9 @@ public class ticket {
     private int bookingID;
 
 
-    private static final String URL = "jdbc:mysql://localhost/airline?";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "FarahHazem123@";
+    private static final String URL = "jdbc:mysql://localhost:3306/version2";
+    private static final String USERNAME = "salma";
+    private static final String PASSWORD = "Salma.123456";
     private static Connection connection = null;
 
     public ticket () {
@@ -39,33 +39,11 @@ public class ticket {
         this.flightID = flightID;
     }
 
-    public static Connection getconnection () {
-        String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        try {
-            Class.forName( driver );
-            connection = DriverManager.getConnection( URL , USERNAME , PASSWORD );
-            System.out.println( "Connected to the database successfully!" );
-        } catch ( ClassNotFoundException e ) {
-            System.out.println( "Driver class not found: " + e.getMessage() );
-        } catch ( SQLException e ) {
-            System.out.println( "Database connection error: " + e.getMessage() );
-        } finally {
-            // Close the connection in the finally block to ensure it gets closed regardless of any exceptions
-            if ( connection != null ) {
-                try {
-                    connection.close();
-                } catch ( SQLException e ) {
-                    System.out.println( "Failed to close the database connection: " + e.getMessage() );
-                }
-            }
-        }
-        return connection;
-    }
 
     public int generateBookingId () {
         int bid = 0;
         try {
-            Connection con = DriverManager.getConnection( URL , USERNAME , PASSWORD );
+            Connection con = Databaseconnection.getConnection();
 
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery( "SELECT MAX(BID) FROM BOOKING" );
@@ -99,7 +77,7 @@ public class ticket {
             //  (tid,seatnum,nid,classnum,fid);
 
             ticket tic = new ticket( t.ticketID , t.seatNumber , t.nationalId , t.Classnumber , t.flightID );
-            Connection con = DriverManager.getConnection( URL , USERNAME , PASSWORD );
+            Connection con = Databaseconnection.getConnection();
 
             PreparedStatement ps = con.prepareStatement( "INSERT INTO TICKET (TICKETID, FLIGHT_ID, SEATNUMBER,PASSENGER_NATONAL_ID,CLASS) VALUES (?, ?, ?,?,?)" );
             ps.setInt( 1 , t.ticketID );
@@ -128,7 +106,7 @@ public class ticket {
 
     public void saveBooking(ticket t){
         try {
-            Connection con = DriverManager.getConnection( URL , USERNAME , PASSWORD );
+            Connection con = Databaseconnection.getConnection();
 
             PreparedStatement ps = con.prepareStatement( "INSERT INTO booking (NATIONALID2, FID, TICKETID,BID) VALUES (?, ?, ?,?)" );
             ps.setLong( 1 , t.nationalId );
@@ -152,37 +130,47 @@ public class ticket {
             System.out.println( e );
         }
     }
+    public int countTickets() { //this two function should be in the admin
+        int ticketCount = 0;
+        try {
+            Connection con = Databaseconnection.getConnection();
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM TICKET");
+            if (resultSet.next()) {
+                ticketCount = resultSet.getInt(1);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return ticketCount;
+    }
 
+    public int countBookings() {//this two function should be in the admin
+        int bookingCount = 0;
+        try {
+            Connection con = Databaseconnection.getConnection();
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM BOOKING");
+            if (resultSet.next()) {
+                bookingCount = resultSet.getInt(1);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return bookingCount;
+    }
 
-
-
-//         try (
-//             Connection conn = DriverManager.getConnection(URL,username, password);
-//             Statement stmt = conn.createStatement();
-//             ResultSet rs = stmt.executeQuery("SELECT * FROM COSTUMER")) {
-//
-//            while (rs.next()) {
-//                long ssn = rs.getInt("PASSENGER_NATONAL_ID");
-//                int ticketid = rs.getInt("TICKETID");
-//                short seatnumber = rs.getShort("SEATNUMBER");
-//                String classnumber = rs.getString("CLASS");
-//                int flightId = rs.getInt("FLIGHT_ID");
-//
-//
-//                ticket t = new ticket(ticketid,seatnumber,ssn,classnumber,flightId);
-////    public ticket(int ticketID, short seatNumber, long nationalId, String Classnumber) {
-//                System.out.println("Ticket saved to the database successfully.");
-//
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("no SQL connection ");
-//        }
 
 
     public int generateTicketId() {
         int ticketId = 0;
-        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             Statement s = con.createStatement();
+        try (
+                Connection con = Databaseconnection.getConnection();
+                         Statement s = con.createStatement();
              ResultSet rs = s.executeQuery("SELECT MAX(TICKETID) FROM ticket")) {
 
             rs.next();
@@ -201,7 +189,7 @@ public class ticket {
     public boolean checkTicketFlightMatch(int flightID) {
         boolean matchFound = false;
         try {
-            Connection con = DriverManager.getConnection(URL,USERNAME, PASSWORD);
+            Connection con = Databaseconnection.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT FID FROM flight WHERE availability = true AND FID = ?");
             ps.setInt(1, flightID);
 
@@ -246,48 +234,4 @@ public class ticket {
         }
     }
 
-    public int getTicketID() {
-        return ticketID;
-    }
-
-    public void setTicketID(int ticketID) {
-        this.ticketID = ticketID;
-    }
-
-    public short getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(short seatNumber) {
-        this.seatNumber = seatNumber;
-    }
-
-    public long getNationalId() {
-        return nationalId;
-    }
-
-    public void setNationalId(long nationalId) {
-        this.nationalId = nationalId;
-    }
-
-    public String getClassnumber() {
-        return Classnumber;
-    }
-
-    public void setClassnumber(String Classnumber) {
-        this.Classnumber = Classnumber;
-    }
-
-    public int getFlightID() {
-        return flightID;
-    }
-
-    public void setFlightID(int flightID) {
-        this.flightID = flightID;
-    }
-
-
-    public void setBookingID ( int bookingID ) {
-        this.bookingID = bookingID;
-    }
 }
