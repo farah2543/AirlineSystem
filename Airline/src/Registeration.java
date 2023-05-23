@@ -18,7 +18,7 @@ public class Registeration extends JDialog{
     private JPasswordField passwordField;
     private JPasswordField CONpasswordField;
     private JTextField Confirm;
-    public CustomerAuthentication cust;
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -39,7 +39,8 @@ public class Registeration extends JDialog{
         });
         cancelButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 dispose();
             }
         });
@@ -73,7 +74,11 @@ public class Registeration extends JDialog{
             return;
         }
         RegisterUser=addUserToDataBase(id,name,Age,Password,Email);
-        cust=new CustomerAuthentication(id,name,Password,Email,Age);
+        if(RegisterUser)
+        {
+            CustomerAuthentication.InitializeCust(id);
+            //call function menu
+        }
     }
     private boolean addUserToDataBase(String id, String name, String age, String password, String email) {
         final String DB_Url = "jdbc:mysql://localhost/reservation?serverTimezone=UTC";
