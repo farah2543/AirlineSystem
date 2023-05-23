@@ -11,7 +11,7 @@ public class LogIn extends JDialog{
     private JButton cancelButton;
     private JPanel logP;
     public boolean user;
-    public CustomerAuthentication cust=new CustomerAuthentication();
+
 
     public LogIn(JFrame parent)
     {
@@ -30,9 +30,9 @@ public class LogIn extends JDialog{
                 user = getAuthenicationUser(id,pass);
                 if(user)
                 {
+                    CustomerAuthentication.InitializeCust(id);
                     dispose();
-                    cust.setPASSWORD(pass);
-                    cust.setNATIONALID2(id);
+                    //call function menu rather than dispose
                 }
                 else
                 {
