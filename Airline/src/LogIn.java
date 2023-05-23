@@ -11,6 +11,7 @@ public class LogIn extends JDialog{
     private JButton cancelButton;
     private JPanel logP;
     public boolean user;
+    public CustomerAuthentication cust=new CustomerAuthentication();
 
     public LogIn(JFrame parent)
     {
@@ -28,7 +29,11 @@ public class LogIn extends JDialog{
                 String pass=String.valueOf(passwordField.getPassword());
                 user = getAuthenicationUser(id,pass);
                 if(user)
+                {
                     dispose();
+                    cust.setPASSWORD(pass);
+                    cust.setNATIONALID2(id);
+                }
                 else
                 {
                     JOptionPane.showMessageDialog(LogIn.this,"ID or password Invalid","try again",JOptionPane.ERROR_MESSAGE);
