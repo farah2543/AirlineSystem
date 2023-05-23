@@ -1,37 +1,11 @@
-import static java.lang.Math.abs;
-
 public class Main {
     public static void main(String[] args) {
-        menu m =new menu();
-
-
-        while (true){
-            int x = m.system_menu();
-
-            if (x == 1){
-                admin a = new admin();
-                a.menu();
-            }
-
-            if (x == 2){
-                CustomerAuthentication cust=new CustomerAuthentication();
-                m.User_menu(cust);
-                Flight f = new Flight();
-                f.display_flights();
-                ticket ticket = new ticket();
-                ticket.bookTicket();
-
-
-            }
-
-            if (x == 3){
-                System.exit(0);
-            }
-        }
-
-
-
-
+        //signup_form a = new signup_form(null);
+        //Login_form f = new Login_form(null);
+        //admin_menu a = new admin_menu(null);
+       test a = new test(null);
+        //AddF_GUI a = new AddF_GUI(null);
+        //UpdateF_GUI a = new UpdateF_GUI(null);
+        //ShowF_GUI a = new ShowF_GUI(null);
     }
-
-    }
+}

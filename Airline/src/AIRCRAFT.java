@@ -18,9 +18,10 @@ public class AIRCRAFT {
     private int old_CAPACITY = 0;
     //url
 
-    final String DB_Url = "jdbc:mysql://localhost/version2?";
-    final String Username = "salma";
-    final String Pass = "Salma.123456";
+    private final String DB_Url = "jdbc:mysql://localhost/first?serverTimezone=UTC";
+    //String url = "jdbc:sqlserver://localhost;encrypt=true;integratedSecurity=true;";
+    private final String Username = "root";
+    private final String Pass ="Boody_500";
 
     Scanner input = new Scanner (System.in);
 

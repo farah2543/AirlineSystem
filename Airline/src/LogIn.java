@@ -18,7 +18,7 @@ public class LogIn extends JDialog{
         super(parent);
         setTitle("Log In :) ");
         setContentPane(logP);
-        setMinimumSize(new Dimension(550, 474));
+        setMinimumSize(new Dimension(450, 474));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -32,7 +32,7 @@ public class LogIn extends JDialog{
                 {
                     CustomerAuthentication.InitializeCust(id);
                     dispose();
-                    //call function menu rather than dispose
+                    CustomerMenu temp = new CustomerMenu(null);
                 }
                 else
                 {
@@ -49,9 +49,9 @@ public class LogIn extends JDialog{
         setVisible(true);
     }
     private boolean getAuthenicationUser(String id, String pass) {
-        final String DB_Url = "jdbc:mysql://localhost/reservation?serverTimezone=UTC";
+        final String DB_Url = "jdbc:mysql://localhost/first?serverTimezone=UTC";
         final String Username = "root";
-        final String Pass ="T#9758@qlph";
+        final String Pass ="Boody_500";
         try
         {
             Connection con= DriverManager.getConnection(DB_Url,Username,Pass);
@@ -74,7 +74,7 @@ public class LogIn extends JDialog{
     public static void main(String[] args)
     {
         LogIn LogForm = new LogIn(null);
-        if(LogForm.user )
+        if(LogForm.user)
         {
             System.out.println("log in successfully\n");
         }

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -5,35 +6,29 @@ import static java.lang.Math.abs;
 
 public class admin {
     private  int id;
-    private String username;
+    private String username ;
     private String password;
     private String email;
 
-    private void set_username(){
-        System.out.println("username: ");
-        Scanner input = new Scanner(System.in);
-        String username = input.nextLine();
-        this.username = username;
+
+
+    public void set_username(String username){
+
+            this.username = username;
     }
 
-    private void set_email(){
-        System.out.println("email: ");
-        Scanner input = new Scanner(System.in);
-        String email = input.nextLine();
+    public void set_email(String email){
         this.email = email;
     }
 
-    private void set_info(){
+    /*private void set_info(){
         set_username();
         set_email();
         set_password();
-    }
+    }*/
 
-    private void set_password(){
-        System.out.println("password: ");
-        Scanner input = new Scanner(System.in);
-        String password = input.nextLine();
-        this.password = password;
+    public void set_password(String pass){
+        this.password = pass;
     }
 
     public int get_id(){return id;}
@@ -46,65 +41,61 @@ public class admin {
 
 
 
-    public void sign_up(){
+    public boolean sign_up(){
+
+        final String DB_Url = "jdbc:mysql://localhost/first?serverTimezone=UTC";
+        final String Username = "root";
+        final String Pass = "Boody_500";
+        if (email.isEmpty() || username.isEmpty() || password.isEmpty() ){
+            return false;
+        }
+        else{
+            try(Connection con = DriverManager.getConnection(DB_Url,Username,Pass)){
+
+                String fir_query = "select email from admin WHERE EMAIL = ?";
+
+                PreparedStatement prepare_fir = con.prepareStatement(fir_query);
+                prepare_fir.setString(1,this.email);
+                ResultSet result =  prepare_fir.executeQuery();
+
+                while (result.next()){
+
+                    String temp = result.getString("email");
+                    if (email.equals(temp)){
+                        return false;
+                    }
 
 
-        set_info();
 
-        final String DB_Url = "jdbc:mysql://localhost/version2?";
-        final String Username = "salma";
-        final String Pass = "Salma.123456";
-
-        try(Connection con = DriverManager.getConnection(DB_Url,Username,Pass)){
-
-            String fir_query = "select email from admin WHERE EMAIL = ?";
-
-            PreparedStatement prepare_fir = con.prepareStatement(fir_query);
-            prepare_fir.setString(1,this.email);
-            ResultSet result =  prepare_fir.executeQuery();
-
-            while (result.next()){
-
-                String temp = result.getString("email");
-                if (email.equals(temp)){
-                    System.out.println("this email already exist ,try another one!");
-                    set_email();
-                    prepare_fir.setString(1,this.email);
-                    result =  prepare_fir.executeQuery();
                 }
 
 
+                String sec_query = "insert into admin (username,email,password) values (?,?,?)";
+                PreparedStatement prepare_sec = con.prepareStatement(sec_query);
+                prepare_sec.setString(1,username);
+                prepare_sec.setString(2,email);
+                prepare_sec.setString(3,password);
 
+                int addedrow = prepare_sec.executeUpdate();
+
+                if (addedrow > 0){
+                    System.out.println("\n\naccount added successfully\n\n");
+                }
             }
-
-
-            String sec_query = "insert into admin (username,email,password) values (?,?,?)";
-            PreparedStatement prepare_sec = con.prepareStatement(sec_query);
-            prepare_sec.setString(1,username);
-            prepare_sec.setString(2,email);
-            prepare_sec.setString(3,password);
-
-            int addedrow = prepare_sec.executeUpdate();
-
-            if (addedrow > 0){
-                System.out.println("\n\naccount added successfully\n\n");
-
+            catch (SQLException e){
+                System.out.println(e.getMessage());
             }
+            return true;
         }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
     }
 
     public boolean login(){
 
-        set_email();
-        set_password();
+        final String DB_Url = "jdbc:mysql://localhost/first?serverTimezone=UTC";
+        final String Username = "root";
+        final String Pass = "Boody_500";
 
-
-         final String DB_Url = "jdbc:mysql://localhost/airline?";
-         final String Username = "root";
-         final String Pass = "FarahHazem123@";
 
         try (Connection con = DriverManager.getConnection(DB_Url,Username,Pass)){
             String query = "select * from admin where email = ? and password = ?";
@@ -116,17 +107,12 @@ public class admin {
 
 
             while (!result.next()){
-                System.out.println("invalid credentials!,try another again");
-                set_email();
-                set_password();
-                stmnt.setString(1,get_email());
-                stmnt.setString(2,get_password());
-                result = stmnt.executeQuery();
-
-
+                System.out.println("invalid credentials!,try again");
+                return false;
             }
-            System.out.println("\n\nlogged in successfully\n\n ");
 
+            System.out.println("\n\nlogged in successfully\n\n ");
+            username = result.getString("USERNAME");
 
 
         }
@@ -144,7 +130,7 @@ public class admin {
 
     public void add_flight(){
         Flight f = new Flight();
-        f.addFlight();
+        //f.addFlight();
     }
 
     public void update_aircraft(){
@@ -162,7 +148,7 @@ public class admin {
 
     public void update_flight(){
         Flight f = new Flight();
-        f.updateFlightInfo();
+        //f.updateFlightInfo();
     }
 
 
@@ -170,10 +156,10 @@ public class admin {
 
     public void avalible_flights(){
         Flight f = new Flight();
-        f.display_flights();
+
     }
 
-    public void menu(){
+    /*public void menu(){
 
 
         int choice;
@@ -246,5 +232,5 @@ public class admin {
 
         System.out.println("\n");
 
-    }
+    }*/
 }

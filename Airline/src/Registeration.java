@@ -27,7 +27,7 @@ public class Registeration extends JDialog{
         super(parent);
         setTitle("Welcome :) ");
         setContentPane(RegisterationForm);
-        setMinimumSize(new Dimension(550, 474));
+        setMinimumSize(new Dimension(450, 474));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -77,13 +77,14 @@ public class Registeration extends JDialog{
         if(RegisterUser)
         {
             CustomerAuthentication.InitializeCust(id);
-            //call function menu
+            JOptionPane.showMessageDialog(rootPane,"Registered Successfully","Done",JOptionPane.INFORMATION_MESSAGE);
+            dispose();
         }
     }
     private boolean addUserToDataBase(String id, String name, String age, String password, String email) {
-        final String DB_Url = "jdbc:mysql://localhost/reservation?serverTimezone=UTC";
+        final String DB_Url = "jdbc:mysql://localhost/first?serverTimezone=UTC";
         final String Username = "root";
-        final String Pass ="T#9758@qlph";
+        final String Pass ="Boody_500";
         try
         {
             Connection con= DriverManager.getConnection(DB_Url,Username,Pass);

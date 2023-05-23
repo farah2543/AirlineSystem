@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="signup_form">
+  <grid id="27dc6" binding="mypanel" layout-manager="GridLayoutManager" row-count="9" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="29" y="265" width="539" height="441"/>
+    </constraints>
+    <properties>
+      <background color="-1249809"/>
+      <enabled value="true"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="b6336" class="javax.swing.JTextField" binding="email_input">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="25"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1249809"/>
+          <font name="Times New Roman" size="14" style="0"/>
+        </properties>
+      </component>
+      <component id="289b9" class="javax.swing.JPasswordField" binding="password_input">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="100" height="25"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1249809"/>
+          <font name="Times New Roman" size="14" style="0"/>
+        </properties>
+      </component>
+      <component id="29b8c" class="javax.swing.JTextField" binding="username_input">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="25"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1249809"/>
+          <font name="Times New Roman" size="14" style="0"/>
+        </properties>
+      </component>
+      <component id="be211" class="javax.swing.JButton" binding="heading">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-15983276"/>
+          <font name="Times New Roman" size="22" style="0"/>
+          <foreground color="-1249809"/>
+          <icon value="working (2).png"/>
+          <text value="Sign Up"/>
+        </properties>
+      </component>
+      <component id="b0b2d" class="javax.swing.JButton" binding="cancelButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-15983276"/>
+          <foreground color="-1249809"/>
+          <text value="Cancel"/>
+        </properties>
+      </component>
+      <component id="8435a" class="javax.swing.JButton" binding="register_button">
+        <constraints>
+          <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-15983276"/>
+          <foreground color="-1249809"/>
+          <text value="Signup"/>
+        </properties>
+      </component>
+      <component id="c6895" class="javax.swing.JLabel" binding="labelfor_username">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1249809"/>
+          <font name="Times New Roman" size="22" style="0"/>
+          <foreground color="-15983276"/>
+          <text value="Username:"/>
+        </properties>
+      </component>
+      <component id="a7b57" class="javax.swing.JLabel" binding="labelfor_email">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1249809"/>
+          <font name="Times New Roman" size="22" style="0"/>
+          <foreground color="-15983276"/>
+          <text value="Email:"/>
+        </properties>
+      </component>
+      <component id="61563" class="javax.swing.JLabel" binding="labelfor_password">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1249809"/>
+          <font name="Times New Roman" size="22" style="0"/>
+          <foreground color="-15983276"/>
+          <text value="Password:"/>
+        </properties>
+      </component>
+      <grid id="377f1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="0" row-span="8" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="b28d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="5" row-span="8" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </grid>
+    </children>
+  </grid>
+</form>
